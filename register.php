@@ -48,12 +48,12 @@ if (isset($_POST['register'])) {
         <input class="form-control mb-3" name="username" placeholder="Username" required><br>
         <input class="form-control mb-3" type="email" name="email" placeholder="Email" required><br>
         <input class="form-control mb-3" type="password" name="password" placeholder="Password" required><br>
+        <input class="form-control mb-3" type="password" name="confirm_password" placeholder="Confirm Password" required><br>
         <select class="form-control mb-3" name="role" required><br>
             <option value="" disabled selected>Select Role</option>
             <option value="student">Student</option>
             <option value="admin">Admin</option>
-        </select><br>
-        <input class="form-control mb-3" type="password" name="confirm_password" placeholder="Confirm Password" required><br><br>
+        </select><br><br>
         <button type="submit" class="btn btn-success w-100" name="register">Register</button>
     </form>
     <div class="text-center mt-3">
