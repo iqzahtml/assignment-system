@@ -35,5 +35,6 @@ if(isset($_POST['login'])){
 <form method="POST">
 <input type="email" name="email" placeholder="Email"><br>
 <input type="password" name="password" placeholder="Password"><br>
-<button name="login">Login</button>
+<button name="login">Login</button><br>
+<a href="register.php">Register here</a>
 </form>
