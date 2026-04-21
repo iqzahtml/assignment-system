@@ -1,6 +1,7 @@
-<?php include "includes/db.php"; ?>
+<?php 
+include "includes/db.php"; 
+include "includes/header.php";
 
-<?php
 
 $error = "";
 $success = "";
@@ -42,8 +43,14 @@ if (isset($_POST['register'])) {
 }
 ?>
 
-<div>
-    <h2> Register </h2><br>
+<div class="card main-card p-4 w-100">
+    <h2 class="text-center"> Register </h2><br>
+    <?php if($error): ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
+    <?php if($success): ?>
+        <div class="alert alert-success"><?php echo $success; ?></div>
+    <?php endif; ?>
    <form method="POST">
         <input class="form-control mb-3" name="username" placeholder="Username" required><br>
         <input class="form-control mb-3" type="email" name="email" placeholder="Email" required><br>
@@ -54,9 +61,10 @@ if (isset($_POST['register'])) {
             <option value="student">Student</option>
             <option value="admin">Admin</option>
         </select><br><br>
-        <button type="submit" class="btn btn-success w-100" name="register">Register</button>
+        <button type="submit" class="btn btn-secondary w-100" name="register">Register</button>
     </form>
     <div class="text-center mt-3">
+        Already have an account?
         <a href="login.php"> Login here</a>
     </div>
 </div>
