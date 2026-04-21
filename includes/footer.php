@@ -9,7 +9,7 @@
     </div>
 <footer class="text-white text-center py-3 mt-5" background: #595959>
     <div class="container">
-        <p class="mb-0">&copy; <?php echo date('Y'); ?> Student Service Portal System. All rights reserved.</p>
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> Assignment System. All rights reserved.</p>
     </div>
 </footer>
 </body>
