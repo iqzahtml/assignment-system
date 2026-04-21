@@ -7,36 +7,45 @@ $error = "";
 $success = "";
 
 if (isset($_POST['register'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $role = mysqli_real_escape_string($conn, $_POST['role']);
-    
-    // Check if passwords match
-    if ($password !== $confirm_password) {
+    $role = $_POST['role'];
+
+    // server-side validation
+    if(empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)){
+        $error = "All fields required!";
+    }
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Invalid email format!";
+    }
+    elseif ($password !== $confirm_password) {
         $error = "Passwords do not match!";
-    } else {
-        // Check if email already exists
-        $check_sql = "SELECT id FROM users WHERE email = ?";
-        $check_stmt = mysqli_prepare($conn, $check_sql);
-        mysqli_stmt_bind_param($check_stmt, "s", $email);
-        mysqli_stmt_execute($check_stmt);
-        mysqli_stmt_store_result($check_stmt);
-        
-        if (mysqli_stmt_num_rows($check_stmt) > 0) {
-            $error = "Email already registered!";
+    }
+    elseif (strlen($password) < 6) {
+        $error = "Password must be at least 6 characters!";
+    }
+    else {
+        // check email
+        $check = $conn->prepare("SELECT id FROM users WHERE email=?");
+        $check->bind_param("s",$email);
+        $check->execute();
+        $check->store_result();
+
+        if($check->num_rows > 0){
+            $error = "Email already exists!";
         } else {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            
-            $sql = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
-            $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $hashed_password, $role);
-            
-            if (mysqli_stmt_execute($stmt)) {
-                $success = "Registration successful! You can now login.";
+            $hashed = password_hash($password, PASSWORD_DEFAULT);
+
+            $stmt = $conn->prepare("INSERT INTO users (name,email,password,role) VALUES (?,?,?,?)");
+            $stmt->bind_param("ssss",$username,$email,$hashed,$role);
+
+            if($stmt->execute()){
+                $success = "Register successful!";
             } else {
-                $error = "Registration failed. Please try again.";
+                $error = "Something went wrong!";
             }
         }
     }
