@@ -1,8 +1,8 @@
 <?php include "../includes/db.php"; ?>
 
-$key = $_GET['key'];
+$key = $_GET['key'] ?? "";
 
-// search assignment
+// prepared statement for security
 $sql = "SELECT * FROM assignments WHERE title LIKE ?";
 $stmt = $conn->prepare($sql);
 
