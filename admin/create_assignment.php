@@ -2,24 +2,25 @@
 <?php include "../includes/header.php"; ?>
 
 <?php
-// error message
 $message = "";
 
 if(isset($_POST['submit'])){
     $title = trim($_POST['title']);
     $desc = trim($_POST['description']);
 
-    // basic validation
+    // server-side validation
     if(empty($title) || empty($desc)){
         $message = "<div class='alert alert-danger'>All fields required</div>";
-    } else {
-
-        // insert into database
+    }
+    elseif(strlen($title) < 3){
+        $message = "<div class='alert alert-danger'>Title too short</div>";
+    }
+    else{
         $stmt = $conn->prepare("INSERT INTO assignments (title, description) VALUES (?,?)");
         $stmt->bind_param("ss", $title, $desc);
 
         if($stmt->execute()){
-            $message = "<div class='alert alert-success'>Assignment created</div>";
+            $message = "<div class='alert alert-success'>Assignment created successfully</div>";
         } else {
             $message = "<div class='alert alert-danger'>Error creating assignment</div>";
         }
@@ -38,5 +39,23 @@ if(isset($_POST['submit'])){
         <button class="btn btn-secondary w-100" name="submit">Create</button>
     </form>
 </div>
+
+<script>
+// client-side validation
+document.querySelector("form").addEventListener("submit", function(e){
+    let title = document.querySelector("[name='title']").value.trim();
+    let desc = document.querySelector("[name='description']").value.trim();
+
+    if(title === "" || desc === ""){
+        alert("All fields required");
+        e.preventDefault();
+    }
+
+    if(title.length < 3){
+        alert("Title too short");
+        e.preventDefault();
+    }
+});
+</script>
 
 <?php include "../includes/footer.php"; ?>
