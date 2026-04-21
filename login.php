@@ -1,6 +1,10 @@
-<?php include "includes/db.php"; ?>
+<?php 
+session_start();
+include "includes/db.php"; 
+include "includes/header.php"; 
 
-<?php
+$error="";
+
 if(isset($_POST['login'])){
     $email = $_POST['email'];
     $pass = $_POST['password'];
@@ -24,18 +28,27 @@ if(isset($_POST['login'])){
             }
 
         } else {
-            echo "Wrong password";
+            $error = "Wrong password";
         }
     } else {
-        echo "User not found";
+        $error = "User not found";
     }
 }
 ?>
 
-<h2>Login</h2>
-<form method="POST">
-<input type="email" name="email" placeholder="Email"><br>
-<input type="password" name="password" placeholder="Password"><br>
-<button name="login">Login</button><br>
-<a href="register.php">Register here</a>
-</form>
+<div class="card main-card p-4 w-100">
+    <h2 class="text-center">Login</h2>
+    <?php if($error): ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
+    
+    <form method="POST">
+        <input class="form-control mb-3" type="email" name="email" placeholder="Email" required><br>
+        <input class="form-control mb-3" type="password" name="password" placeholder="Password" required><br>
+        <button class="btn btn-secondary w-100" name="login">Login</button><br>
+        <div class="text-center">
+            Don't have an account?
+            <a  href="register.php"> Register here</a>
+        </div>
+    </form>
+</div>
