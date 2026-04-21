@@ -41,7 +41,7 @@ if(isset($_POST['login'])){
     <?php if($error): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
-    
+
     <form method="POST">
         <input class="form-control mb-3" type="email" name="email" placeholder="Email" required><br>
         <input class="form-control mb-3" type="password" name="password" placeholder="Password" required><br>
@@ -52,3 +52,4 @@ if(isset($_POST['login'])){
         </div>
     </form>
 </div>
+<?php include "includes/footer.php" ?>

@@ -68,3 +68,4 @@ if (isset($_POST['register'])) {
         <a href="login.php"> Login here</a>
     </div>
 </div>
+<?php include "includes/footer.php" ?>
