@@ -4,7 +4,6 @@
 <h3>All Submissions</h3>
 
 <?php
-// join 3 tables
 $sql = "SELECT users.name, assignments.title, submissions.file 
         FROM submissions
         JOIN users ON submissions.user_id = users.id
@@ -27,7 +26,6 @@ $result = $conn->query($sql);
         <td><?= $row['name']; ?></td>
         <td><?= $row['title']; ?></td>
         <td>
-            <!-- download file -->
             <a href="../uploads/<?= $row['file']; ?>" class="btn btn-sm btn-success">Download</a>
         </td>
     </tr>
