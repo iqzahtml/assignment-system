@@ -6,7 +6,6 @@
 <?php
 $user_id = $_SESSION['user_id'];
 
-// join assignment + submissions
 $sql = "SELECT assignments.title, submissions.file, submissions.created_at
         FROM submissions
         JOIN assignments ON submissions.assignment_id = assignments.id
